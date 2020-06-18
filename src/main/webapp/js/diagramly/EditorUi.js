@@ -12049,8 +12049,10 @@
 
 				    							var edgeCell = graph.insertEdge(null, null, label || '', (edge.invert) ?
 				    								ref : realCell, (edge.invert) ? realCell : ref, style);
+				    						
+                                                graph.setAttributeForCell(edgeCell, 'placeholders', '1');
 				    							
-				    							// Adds additional edge labels
+                                                // Adds additional edge labels
 				    							if (edge.labels != null)
 				    							{
 				    								for (var k = 0; k < edge.labels.length; k++)
