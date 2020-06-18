@@ -12033,12 +12033,16 @@
 				    							
 				    							if (edge.fromlabel != null)
 				    							{
-				    								label = (dataCell.getAttribute(edge.fromlabel) || '') + (label || '');
+				    								label = (!edge.invert) ?
+                                                    (dataCell.getAttribute(edge.fromlabel) || '') :
+                                                    (ref.getAttribute(edge.fromlabel) || '') + (label || '');
 				    							}
 				    							
 				    							if (edge.tolabel != null)
 				    							{
-				    								label = (label || '') + (ref.getAttribute(edge.tolabel) || '');
+				    								label = (label || '') + (!edge.invert) ? 
+                                                    (ref.getAttribute(edge.tolabel) || '') : 
+                                                    (dataCell.getAttribute(edge.tolabel) || '');
 				    							}
 				    							
 				    							var placeholders = ((edge.placeholders == 'target') ==
@@ -12050,8 +12054,6 @@
 				    							var edgeCell = graph.insertEdge(null, null, label || '', (edge.invert) ?
 				    								ref : realCell, (edge.invert) ? realCell : ref, style);
 				    						
-                                                graph.setAttributeForCell(edgeCell, 'placeholders', '1');
-				    							
                                                 // Adds additional edge labels
 				    							if (edge.labels != null)
 				    							{
@@ -12077,6 +12079,16 @@
 				    									edgeCell.insert(el);
 				    								}
 				    							}
+
+                                                if (edge.data != null)
+                                                {
+				    								for (var k = 0; k < edge.data.length; k++)
+				    								{
+				    									var def = edge.data[k];
+                                                        console.dir(def);
+				    								}
+
+                                                }
 				    							
 				    							select.push(edgeCell);
 				    							mxUtils.remove((edge.invert) ? realCell : ref, roots);
